@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 "use client";
 import MapBox, {
   NavigationControl,
@@ -18,7 +19,7 @@ interface Props {
 export default function Map({ latitude, longitude }: Props) {
   const [start, setStart] = useState([0, 0]);
   const [coords, setCoords] = useState([0, 0]);
-  const GeolocationRef = useRef(null);
+  const GeolocationRef = useRef<any>(null);
 
   const getRoute = async () => {
     const res = await fetch(
