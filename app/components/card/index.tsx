@@ -17,7 +17,12 @@ export default function Card({ local }: Props) {
     <div className="card">
       <div
         className="card-info"
-        onClick={() => setDisplayButton(!displayButton)}
+        onClick={() => {
+          setDisplayButton(!displayButton)
+          if (displayRoute) {
+            setDisplayRoute(false);
+          }
+        }}
       >
         {local.image ? (
           <div className="img-box">
@@ -48,18 +53,20 @@ export default function Card({ local }: Props) {
         </div>
       </div>
 
-      {displayRoute ? (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Map latitude={+local.latitude} longitude={+local.longitude} />
-        </motion.div>
-      ) : (
-        <></>
-      )}
+      <AnimatePresence>
+        {displayRoute ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Map latitude={+local.latitude} longitude={+local.longitude} />
+          </motion.div>
+        ) : (
+          <></>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {displayButton ? (

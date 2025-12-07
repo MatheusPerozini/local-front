@@ -3,6 +3,8 @@ import Card from "../card";
 import { Local } from "@/app/features/locals/types/local";
 import "./stylesheet.css";
 
+export const dynamic = "force-dynamic";
+
 export default async function List() {
   const locals: Local[] = await getLocals();
 
