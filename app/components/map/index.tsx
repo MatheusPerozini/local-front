@@ -80,7 +80,7 @@ export default function Map({ latitude, longitude }: Props) {
         style={{ width: 600, height: 400 }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
       >
-        <Source id="polylineLayer" type="geojson" data={dataOne}>
+        <Source id="polylineLayer" type="geojson" data={dataOne as unknown as any}>
           <Layer
             id="lineLayer"
             type="line"
