@@ -1,4 +1,3 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
 "use client";
 import MapBox, {
   NavigationControl,
@@ -19,7 +18,9 @@ interface Props {
 export default function Map({ latitude, longitude }: Props) {
   const [start, setStart] = useState([0, 0]);
   const [coords, setCoords] = useState([0, 0]);
-  const GeolocationRef = useRef<any>(null);
+  const GeolocationRef = useRef<React.ElementRef<
+    typeof GeolocateControl
+  > | null>(null);
 
   const getRoute = async () => {
     const res = await fetch(
@@ -65,7 +66,9 @@ export default function Map({ latitude, longitude }: Props) {
 
   useEffect(() => {
     getRoute();
-    GeolocationRef.current?.trigger();
+    if (GeolocationRef.current?.trigger) {
+      GeolocationRef.current?.trigger();
+    }
   }, [GeolocationRef, latitude, longitude]);
 
   return (
@@ -80,7 +83,11 @@ export default function Map({ latitude, longitude }: Props) {
         style={{ width: 600, height: 400 }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
       >
-        <Source id="polylineLayer" type="geojson" data={dataOne as unknown as any}>
+        <Source
+          id="polylineLayer"
+          type="geojson"
+          data={JSON.stringify(dataOne)}
+        >
           <Layer
             id="lineLayer"
             type="line"
