@@ -1,6 +1,4 @@
-import { api } from "..";
-
 export const getLocals = async () => {
-  const res = await api.get("/locals/");
-  return res.data;
+  const res = await fetch(`${process.env.BASE_API_URL}/locals/`, { cache: "no-store" });
+  return await res.json();
 };
